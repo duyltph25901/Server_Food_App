@@ -1,0 +1,22 @@
+{
+  "name": "food_app",
+  "version": "1.0.0",
+  "description": "Server app mobile đặt đồ ăn (react native)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duyltph25901/Food_App.git"
+  },
+  "keywords": [
+    "Food_App"
+  ],
+  "author": "Lỗ Thành Duy - BeeDyto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/duyltph25901/Food_App/issues"
+  },
+  "homepage": "https://github.com/duyltph25901/Food_App#readme"
+}
