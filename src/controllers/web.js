@@ -179,7 +179,7 @@ const handleAddCategoryChild = async (req, res) => {
 }
 
 const handleAddProduct = async (req, res) => {
-    const { name, description, price, status, idCategory } = req.body
+    const { name, description, price, status, idCategory, discount } = req.body
     const id = uuidv4()
     const createdAt = getTimeNow()
     const updatedAt = createdAt
@@ -206,7 +206,7 @@ const handleAddProduct = async (req, res) => {
     setTimeout(() => {
         console.log(
             `
-                \n>>>>> Check add product:\nName: ${name}\nDes: ${description}\nPrice: ${price}vnd\nStatus: ${status}\nId category: ${idCategory}\nID: ${id}\nCreatedAt: ${createdAt}\nUpdated at: ${updatedAt}\nImage name: ${imageName}\n
+                \n>>>>> Check add product:\nName: ${name}\nDes: ${description}\nPrice: ${price}vnd\nStatus: ${status}\nId category: ${idCategory}\nID: ${id}\nCreatedAt: ${createdAt}\nUpdated at: ${updatedAt}\nImage name: ${imageName}\nDiscount: ${discount}\n
             `
         )
 
@@ -225,9 +225,9 @@ const handleAddProduct = async (req, res) => {
                 .then(async (url) => {
                     console.log(`\n>>>>>Check url image after upload to firebase: ${url[0]}\n`);
                     await pool.execute(
-                        `insert into foods (id, name, category_id, description, price, image, created_at, updated_at, status)
-                        values(?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                        [id, name, idCategory, description, price, url[0], createdAt, updatedAt, status]
+                        `insert into foods (id, name, category_id, description, price, image, created_at, updated_at, status, discount)
+                        values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                        [id, name, idCategory, description, price, url[0], createdAt, updatedAt, status, discount]
                     )
 
                     return res.redirect('/product')
