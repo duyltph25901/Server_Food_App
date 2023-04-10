@@ -73,6 +73,7 @@
                 <thead>
                     <tr class="w3-light-grey">
                         <th>#</th>
+                        <th>ID</th>
                         <th>Tên</th>
                         <th>Thể loại</th>
                         <th>Thao tác</th>
@@ -85,6 +86,9 @@
                                 <%=(i+1)%>
                             </td>
                             <td>
+                                <%=data[i].id%>
+                            </td>
+                            <td>
                                 <%=data[i].name%>
                             </td>
                             <td>
@@ -93,7 +97,7 @@
                             <td style="display: flex;">
                                 <form action="/update-category-parent/<%=data[i].id%>" method="get"
                                     style="margin-right: 7px;">
-                                    <button class="btn btn-success">Cập nhật</button>
+                                    <button class="btn btn-success">Sửa</button>
                                 </form>
                                 <form action="/handle-delete-category-parent" method="post">
                                     <input type="text" value="<%=data[i].id%>" hidden>
