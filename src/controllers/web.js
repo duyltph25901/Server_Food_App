@@ -1,5 +1,5 @@
 const getLoginScreen = (req, res) => {
-    return res.render('LoginScreen.ejs')
+    return res.render('LoginScreen.ejs', { error: false })
 }
 
 const getSignUpScreen = (req, res) => {
