@@ -343,8 +343,8 @@
                         <div class="product-grid">
                             <div class="product-image">
                                 <a href="#">
-                                    <img class="pic-1" src="<%=data[i].image%>" style="height: 150px;">
-                                    <img class="pic-2" src="<%=data[i].image%>" style="height: 150px;">
+                                    <img class="pic-1" src="<%=data[i].image%>" style="height: 200px;">
+                                    <img class="pic-2" src="<%=data[i].image%>" style="height: 200px;">
                                 </a>
                                 <ul class="social">
                                     <li><a href="" data-tip="Xem chi tiết"><i class="fa fa-search"></i></a></li>
@@ -353,8 +353,12 @@
                                     <li><a href="" data-tip="Thêm vào giỏ hàng"><i class="fa fa-shopping-cart"></i></a>
                                     </li>
                                 </ul>
-                                <span class="product-new-label">Sale</span>
-                                <span class="product-discount-label">20%</span>
+                                <%if(data[i].discount> 0) {%>
+                                    <span class="product-new-label">Sale</span>
+                                    <span class="product-discount-label">
+                                        <%=data[i].discount%>%
+                                    </span>
+                                    <%}%>
                             </div>
                             <ul class="rating">
                                 <li class="fa fa-star"></li>
@@ -368,7 +372,7 @@
                                         <%=data[i].name%>
                                     </a></h3>
                                 <div class="price">
-                                    <%=data[i].price%> vnd
+                                    <%=(data[i].price - (data[i].price * data[i].discount / 100)).toFixed(0)%> vnd
                                         <span>
                                             <%=data[i].price%>vnd
                                         </span>
