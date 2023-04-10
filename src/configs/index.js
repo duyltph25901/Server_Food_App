@@ -1,5 +1,7 @@
-import configViewEngine from "./viewEngine";
+import configViewEngine from "./viewEngine"
+import pool from "./database"
 
 export {
-    configViewEngine
+    configViewEngine,
+    pool
 }
