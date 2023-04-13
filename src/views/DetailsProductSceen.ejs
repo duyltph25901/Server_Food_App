@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chi tiết</title>
+    <!-- Link to Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- Link to animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- Link to custom CSS -->
+    <link rel="stylesheet" href="/css/details_product.css">
+    <!-- Link to Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mb-4 mb-md-0">
+                <img class="card-img-top animated fadeInLeft img-fluid img-thumbnail" src="<%=data.image%>"
+                    alt="Food Image">
+            </div>
+            <div class="col-md-6">
+                <h1 class="font-weight-bold mb-3 animated fadeInRight">
+                    <%=data.name%>
+                </h1>
+                <p class="mb-2"><strong>Danh mục:</strong>
+                    <%=data.categoryParent%>
+                </p>
+                <p class="mb-2"><strong>Thể loại:</strong>
+                    <%=data.categoryChild%>
+                </p>
+                <p class="mb-4"><strong>Mô tả:</strong>
+                    <%=data.description%>
+                </p>
+                <h3 class="font-weight-bold mb-3 animated fadeInRight text-danger">
+                    <%=data.price%>
+                </h3>
+                <p class="mb-2"><strong>Triết khấu:</strong>
+                    <%=data.discount%>%
+                </p>
+                <p class="mb-2"><strong>Tạo lúc:</strong>
+                    <%=data.created_at%>
+                </p>
+                <p class="mb-4"><strong>Cập nhật lần cuối:</strong>
+                    <%=data.updated_at%>
+                </p>
+                <form action="/update-foods/<%=data.id%>" method="get">
+                    <button type="submit" class="btn btn-primary btn-lg animated fadeInRight">Cập nhật</button>
+                </form>
+                <p class="mt-4"><strong>Trạng thái:</strong>
+                    <%=(data.status==1 ? 'Còn hàng' : 'Hết hàng' )%>
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- Link to jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Link to Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- Link to animate.css -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"></script>
+</body>
+
+</html>
