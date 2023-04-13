@@ -27,7 +27,6 @@ const getHomeScreen = async (req, res) => {
         `select * from foods limit 30`
     )
 
-
     return res.render('HomeScreen.ejs', { data: rows })
 }
 
@@ -66,6 +65,50 @@ const getProductScreen = async (req, res) => {
         `select * from categories_child`
     )
     return res.render('ProductsScreen.ejs', { data: categories })
+}
+
+const getDetailsProductScreen = async (req, res) => {
+    const id = req.params.id
+
+    console.log(
+        `
+            \n>>>>> Check id food from params: ${id}\n
+        `
+    )
+
+    const food = await pool.execute(
+        `select foods.*, 
+        categories_child.name as categoryChild , 
+        categories_parent.name as categoryParent
+        from foods 
+        inner join categories_child on foods.category_id = categories_child.id
+        inner join categories_parent on categories_child.id_category_parent = categories_parent.id
+        where foods.id = ?`, [id]
+    )
+
+    console.log(
+        `
+            \n>>>>> Check object food found by id: ${JSON.stringify(food[0][0])}\n
+        `
+    )
+
+    return res.render('DetailsProductSceen', { data: food[0][0] })
+}
+
+const getUpdateProductScreen = async (req, res) => {
+    const id = req.params.id
+
+    const foods = await pool.execute(
+        `select * from foods where id = ?`, [id]
+    )
+    const [rows, fields] = await pool.execute(
+        `select * from categories_child`
+    )
+
+    return res.render('UpdateProductScreen.ejs', {
+        food: foods[0][0],
+        categories: rows,
+    })
 }
 
 const handleSignUp = async (req, res) => {
@@ -258,5 +301,7 @@ export {
     getCategoriesParent,
     getCategoriesChild,
     getProductScreen,
-    handleAddProduct
+    handleAddProduct,
+    getDetailsProductScreen,
+    getUpdateProductScreen
 }
