@@ -15,7 +15,8 @@ import {
     getDetailsProductScreen,
     getUpdateProductScreen,
     handleUpdateProduct,
-    handleSearchProductByName
+    handleSearchProductByName,
+    getSaleProductScreen
 } from '../controllers/web'
 import { requireLoggedIn, upload } from '../functions/middleware'
 import express from 'express'
@@ -33,6 +34,7 @@ const initWebRoutes = (app) => {
     app.get('/product', getProductScreen)
     app.get('/details-product/:id', getDetailsProductScreen)
     app.get('/update-foods/:id', getUpdateProductScreen)
+    app.get('/sale', getSaleProductScreen)
 
     app.post('/handle-sign-up', handleSignUp)
     app.post('/handle-login', cookieParser(), handleLogin)
