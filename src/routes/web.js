@@ -13,7 +13,8 @@ import {
     getProductScreen,
     handleAddProduct,
     getDetailsProductScreen,
-    getUpdateProductScreen
+    getUpdateProductScreen,
+    handleUpdateProduct
 } from '../controllers/web'
 import { requireLoggedIn, upload } from '../functions/middleware'
 import express from 'express'
@@ -38,6 +39,7 @@ const initWebRoutes = (app) => {
     app.post('/handle-add-category-parent', handleAddCategoryParent)
     app.post('/handle-add-category-child', handleAddCategoryChild)
     app.post('/handle-add-product', upload.single('image'), handleAddProduct)
+    app.post('/handle-update-product', upload.single('image'), handleUpdateProduct)
 
     return app.use('/login', route)
 }
