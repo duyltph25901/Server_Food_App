@@ -288,6 +288,107 @@ const handleAddProduct = async (req, res) => {
     }, 2000);
 }
 
+const handleUpdateProduct = async (req, res) => {
+    const { name, description, price, discount, imageLink, status, idCategory, id, createdAt } = req.body
+    const lastUpdate = getTimeNow()
+    var imageName = ''
+    let isImageUploadNull = true
+
+    const upload = multer().single('image_product')
+    upload(req, res, async function (err) {
+        if (req.fileValidationError) {
+            return res.send(req.fileValidationError)
+        }
+        else if (!req.file) { // image upload null => user not update image
+            imageName = imageLink
+            isImageUploadNull = true
+        }
+        else if (err instanceof multer.MulterError) {
+            return res.send(`Error 1: ${err}`)
+        }
+        else if (err) {
+            return res.send(`Error 2: ${err}`)
+        } else { // true case => user update image
+            imageName = await req.file.filename
+            isImageUploadNull = false
+        }
+    })
+    // =============== handle upload file ===================
+
+    setTimeout(async () => {
+        if (isImageUploadNull) {
+
+            console.log(
+                `\n>>>>> Check req body update food:
+                Name: ${name}
+                Price: ${price}
+                Description: ${description}
+                Discount: ${discount}%
+                Image link: ${imageLink == imageName}
+                Status: ${status}
+                ID category: ${idCategory}
+                ID: ${id}
+                Created at: ${createdAt}
+                Last update: ${lastUpdate}\n`
+            )
+
+            await pool.execute(
+                `update foods
+                set name = ?, description = ?, price = ?, discount = ?, image = ?, status = ?, category_id = ?, created_at = ?, updated_at = ?
+                where id = ?`,
+                [name, description, price, discount, imageLink, status, idCategory, createdAt, lastUpdate, id]
+            )
+
+            return res.redirect('/')
+        }
+
+        // ================= handle upload to firebase ========================
+        const filePath
+            = `C:\\Users\\FPT\\Desktop\\MyProject\\Project_React_Native\\Food_App\\Server\\src\\public\\images\\${imageName}`
+        storage.upload(filePath, {
+            destination: `image_product/${imageName}` // => đây là đường dẫn tới folder ảnh trên firebase
+        }).then(() => {
+            // ================ handle get to http image ======================
+            const file = storage.file(`image_product/${imageName}`)
+            file.getSignedUrl({
+                action: 'read',
+                expires: '03-17-2150'
+            })
+                .then(async (url) => {
+                    console.log(
+                        `\n>>>>> Check req body update food:
+                        Name: ${name}
+                        Price: ${price}
+                        Description: ${description}
+                        Discount: ${discount}%
+                        Image link new: ${url[0]}
+                        Status: ${status}
+                        ID category: ${idCategory}
+                        ID: ${id}
+                        Created at: ${createdAt}
+                        Last update: ${lastUpdate}\n`
+                    )
+                    await pool.execute(
+                        `update foods
+                        set name = ?, description = ?, price = ?, discount = ?, image = ?, status = ?, category_id = ?, created_at = ?, updated_at = ?
+                        where id = ?`, [name, description, price, discount, url[0], status, idCategory, createdAt, lastUpdate, id]
+                    )
+
+                    return res.redirect('/product')
+                })
+                .catch((err) => {
+                    console.log(err);
+                    return res.redirect('/')
+                })
+            // ================ handle get to http image ======================
+        }).catch((err) => {
+            console.log(err);
+            return res.redirect('/')
+        })
+        // ================= handle upload to firebase ========================
+    }, 2000)
+}
+
 export {
     getLoginScreen,
     getSignUpScreen,
@@ -303,5 +404,6 @@ export {
     getProductScreen,
     handleAddProduct,
     getDetailsProductScreen,
-    getUpdateProductScreen
+    getUpdateProductScreen,
+    handleUpdateProduct
 }
