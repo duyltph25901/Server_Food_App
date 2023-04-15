@@ -16,7 +16,25 @@ import {
     getUpdateProductScreen,
     handleUpdateProduct,
     handleSearchProductByName,
-    getSaleProductScreen
+    getSaleProductScreen,
+    getRiceScreen,
+    getVegetarianRice,
+    getNoodleScreen,
+    getFastFoodScreen,
+    getCoffeeScreen,
+    getSmoothieScreen,
+    getCarbonatedWarterScreen,
+    getMilkTeaScreen,
+    getBreadScreen,
+    getCustardCakeScreen,
+    getChoxCakeScreen,
+    getCupCakeScreen,
+    getTartCakeScreen,
+    getDriedBeef,
+    getDriedChicken,
+    getRicePaper,
+    getSpicySnacks,
+    getSnack
 } from '../controllers/web'
 import { requireLoggedIn, upload } from '../functions/middleware'
 import express from 'express'
@@ -35,6 +53,24 @@ const initWebRoutes = (app) => {
     app.get('/details-product/:id', getDetailsProductScreen)
     app.get('/update-foods/:id', getUpdateProductScreen)
     app.get('/sale', getSaleProductScreen)
+    app.get('/rice', getRiceScreen)
+    app.get('/rice-vegetarian', getVegetarianRice)
+    app.get('/noodle', getNoodleScreen)
+    app.get('/fast-food', getFastFoodScreen)
+    app.get('/milk-tea', getMilkTeaScreen)
+    app.get('/carbonated-water', getCarbonatedWarterScreen)
+    app.get('/coffee', getCoffeeScreen)
+    app.get('/smoothie', getSmoothieScreen)
+    app.get('/bread', getBreadScreen)
+    app.get('/custard', getCustardCakeScreen)
+    app.get('/cupcake', getCupCakeScreen)
+    app.get('/choxcake', getChoxCakeScreen)
+    app.get('/tart', getTartCakeScreen)
+    app.get('/dried-beef', getDriedBeef)
+    app.get('/dried-chicken', getDriedChicken)
+    app.get('/rice-paper', getRicePaper)
+    app.get('/spicy-snack', getSpicySnacks)
+    app.get('/snack', getSnack)
 
     app.post('/handle-sign-up', handleSignUp)
     app.post('/handle-login', cookieParser(), handleLogin)
