@@ -14,7 +14,8 @@ import {
     handleAddProduct,
     getDetailsProductScreen,
     getUpdateProductScreen,
-    handleUpdateProduct
+    handleUpdateProduct,
+    handleSearchProductByName
 } from '../controllers/web'
 import { requireLoggedIn, upload } from '../functions/middleware'
 import express from 'express'
@@ -40,6 +41,7 @@ const initWebRoutes = (app) => {
     app.post('/handle-add-category-child', handleAddCategoryChild)
     app.post('/handle-add-product', upload.single('image'), handleAddProduct)
     app.post('/handle-update-product', upload.single('image'), handleUpdateProduct)
+    app.post('/search-products-by-name', handleSearchProductByName)
 
     return app.use('/login', route)
 }
