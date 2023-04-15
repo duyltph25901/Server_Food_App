@@ -111,6 +111,14 @@ const getUpdateProductScreen = async (req, res) => {
     })
 }
 
+const getSaleProductScreen = async (req, res) => {
+    const [rows, fields] = await pool.execute(
+        `select * from foods where discount > 0`
+    )
+
+    return res.render('SaleProductScreen', { data: rows })
+}
+
 const handleSignUp = async (req, res) => {
     const { email, userName, password, phoneNumber } = req.body
     const id = uuidv4()
@@ -426,5 +434,6 @@ export {
     getDetailsProductScreen,
     getUpdateProductScreen,
     handleUpdateProduct,
-    handleSearchProductByName
+    handleSearchProductByName,
+    getSaleProductScreen
 }
