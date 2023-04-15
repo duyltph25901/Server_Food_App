@@ -38,7 +38,10 @@
                     <%=data.description%>
                 </p>
                 <h3 class="font-weight-bold mb-3 animated fadeInRight text-danger">
-                    <%=data.price%>
+                    <%const formatPriceByVND=(price)=> {%>
+                        <%= price.toLocaleString('vi', { style: 'currency' , currency: 'VND' }) %>
+                            <%}%>
+                                <%=formatPriceByVND(data.price)%>
                 </h3>
                 <p class="mb-2"><strong>Triết khấu:</strong>
                     <%=data.discount%>%
