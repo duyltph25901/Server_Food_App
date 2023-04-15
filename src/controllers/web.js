@@ -2,7 +2,6 @@ import { v4 as uuidv4 } from 'uuid'
 import getTimeNow from '../functions/getTimeNow'
 import { pool } from '../configs/index'
 import { storage } from '../configs/firebase'
-import path from 'path'
 import multer from 'multer'
 import { setTimeout } from 'timers'
 
@@ -114,6 +113,222 @@ const getUpdateProductScreen = async (req, res) => {
 const getSaleProductScreen = async (req, res) => {
     const [rows, fields] = await pool.execute(
         `select * from foods where discount > 0`
+    )
+
+    return res.render('SaleProductScreen', { data: rows })
+}
+
+const getRiceScreen = async (req, res) => {
+    const [rows, fields] = await pool.execute(
+        `select foods.*,
+        categories_child.name as CategoryName
+        from foods
+        inner join categories_child on categories_child.id = foods.category_id 
+        where categories_child.name = ?`, ['Cơm']
+    )
+
+    return res.render('SaleProductScreen', { data: rows })
+}
+
+const getVegetarianRice = async (req, res) => {
+    const [rows, fields] = await pool.execute(
+        `select foods.*,
+        categories_child.name as CategoryName
+        from foods
+        inner join categories_child on categories_child.id = foods.category_id 
+        where categories_child.name = ?`, ['Cơm chay']
+    )
+
+    return res.render('SaleProductScreen', { data: rows })
+}
+
+const getNoodleScreen = async (req, res) => {
+    const [rows, fields] = await pool.execute(
+        `select foods.*,
+        categories_child.name as CategoryName
+        from foods
+        inner join categories_child on categories_child.id = foods.category_id 
+        where categories_child.name = ?`, ['Mì']
+    )
+
+    return res.render('SaleProductScreen', { data: rows })
+}
+
+const getFastFoodScreen = async (req, res) => {
+    const [rows, fields] = await pool.execute(
+        `select foods.*,
+        categories_child.name as CategoryName
+        from foods
+        inner join categories_child on categories_child.id = foods.category_id 
+        where categories_child.name = ?`, ['Đồ ăn nhanh']
+    )
+
+    return res.render('SaleProductScreen', { data: rows })
+}
+
+const getSmoothieScreen = async (req, res) => {
+    const [rows, fields] = await pool.execute(
+        `select foods.*,
+        categories_child.name as CategoryName
+        from foods
+        inner join categories_child on categories_child.id = foods.category_id 
+        where categories_child.name = ?`, ['Sinh tố']
+    )
+
+    return res.render('SaleProductScreen', { data: rows })
+}
+
+const getCarbonatedWarterScreen = async (req, res) => {
+    const [rows, fields] = await pool.execute(
+        `select foods.*,
+        categories_child.name as CategoryName
+        from foods
+        inner join categories_child on categories_child.id = foods.category_id 
+        where categories_child.name = ?`, ['Nước có gas']
+    )
+
+    return res.render('SaleProductScreen', { data: rows })
+}
+
+const getCoffeeScreen = async (req, res) => {
+    const [rows, fields] = await pool.execute(
+        `select foods.*,
+        categories_child.name as CategoryName
+        from foods
+        inner join categories_child on categories_child.id = foods.category_id 
+        where categories_child.name = ?`, ['Cà phê']
+    )
+
+    return res.render('SaleProductScreen', { data: rows })
+}
+
+const getMilkTeaScreen = async (req, res) => {
+    const [rows, fields] = await pool.execute(
+        `select foods.*,
+        categories_child.name as CategoryName
+        from foods
+        inner join categories_child on categories_child.id = foods.category_id 
+        where categories_child.name = ?`, ['Trà sữa']
+    )
+
+    return res.render('SaleProductScreen', { data: rows })
+}
+
+const getCupCakeScreen = async (req, res) => {
+    const [rows, fields] = await pool.execute(
+        `select foods.*,
+        categories_child.name as CategoryName
+        from foods
+        inner join categories_child on categories_child.id = foods.category_id 
+        where categories_child.name = ?`, ['Cupcake']
+    )
+
+    return res.render('SaleProductScreen', { data: rows })
+}
+
+const getTartCakeScreen = async (req, res) => {
+    const [rows, fields] = await pool.execute(
+        `select foods.*,
+        categories_child.name as CategoryName
+        from foods
+        inner join categories_child on categories_child.id = foods.category_id 
+        where categories_child.name = ?`, ['Tart']
+    )
+
+    return res.render('SaleProductScreen', { data: rows })
+}
+
+const getChoxCakeScreen = async (req, res) => {
+    const [rows, fields] = await pool.execute(
+        `select foods.*,
+        categories_child.name as CategoryName
+        from foods
+        inner join categories_child on categories_child.id = foods.category_id 
+        where categories_child.name = ?`, ['Su kem']
+    )
+
+    return res.render('SaleProductScreen', { data: rows })
+}
+
+const getCustardCakeScreen = async (req, res) => {
+    const [rows, fields] = await pool.execute(
+        `select foods.*,
+        categories_child.name as CategoryName
+        from foods
+        inner join categories_child on categories_child.id = foods.category_id 
+        where categories_child.name = ?`, ['Bông lan']
+    )
+
+    return res.render('SaleProductScreen', { data: rows })
+}
+
+const getBreadScreen = async (req, res) => {
+    const [rows, fields] = await pool.execute(
+        `select foods.*,
+        categories_child.name as CategoryName
+        from foods
+        inner join categories_child on categories_child.id = foods.category_id 
+        where categories_child.name = ?`, ['Bánh mì']
+    )
+
+    return res.render('SaleProductScreen', { data: rows })
+}
+
+const getDriedBeef = async (req, res) => {
+    const [rows, fields] = await pool.execute(
+        `select foods.*,
+        categories_child.name as CategoryName
+        from foods
+        inner join categories_child on categories_child.id = foods.category_id 
+        where categories_child.name = ?`, ['Khô bò']
+    )
+
+    return res.render('SaleProductScreen', { data: rows })
+}
+
+const getDriedChicken = async (req, res) => {
+    const [rows, fields] = await pool.execute(
+        `select foods.*,
+        categories_child.name as CategoryName
+        from foods
+        inner join categories_child on categories_child.id = foods.category_id 
+        where categories_child.name = ?`, ['Khô gà']
+    )
+
+    return res.render('SaleProductScreen', { data: rows })
+}
+
+const getRicePaper = async (req, res) => {
+    const [rows, fields] = await pool.execute(
+        `select foods.*,
+        categories_child.name as CategoryName
+        from foods
+        inner join categories_child on categories_child.id = foods.category_id 
+        where categories_child.name = ?`, ['Bánh tráng']
+    )
+
+    return res.render('SaleProductScreen', { data: rows })
+}
+
+const getSpicySnacks = async (req, res) => {
+    const [rows, fields] = await pool.execute(
+        `select foods.*,
+        categories_child.name as CategoryName
+        from foods
+        inner join categories_child on categories_child.id = foods.category_id 
+        where categories_child.name = ?`, ['Que cay']
+    )
+
+    return res.render('SaleProductScreen', { data: rows })
+}
+
+const getSnack = async (req, res) => {
+    const [rows, fields] = await pool.execute(
+        `select foods.*,
+        categories_child.name as CategoryName
+        from foods
+        inner join categories_child on categories_child.id = foods.category_id 
+        where categories_child.name = ?`, ['Snack']
     )
 
     return res.render('SaleProductScreen', { data: rows })
@@ -435,5 +650,23 @@ export {
     getUpdateProductScreen,
     handleUpdateProduct,
     handleSearchProductByName,
-    getSaleProductScreen
+    getSaleProductScreen,
+    getRiceScreen,
+    getVegetarianRice,
+    getNoodleScreen,
+    getFastFoodScreen,
+    getSmoothieScreen,
+    getCarbonatedWarterScreen,
+    getCoffeeScreen,
+    getMilkTeaScreen,
+    getBreadScreen,
+    getCustardCakeScreen,
+    getChoxCakeScreen,
+    getCupCakeScreen,
+    getTartCakeScreen,
+    getDriedBeef,
+    getDriedChicken,
+    getRicePaper,
+    getSpicySnacks,
+    getSnack
 }
