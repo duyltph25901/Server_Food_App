@@ -389,6 +389,26 @@ const handleUpdateProduct = async (req, res) => {
     }, 2000)
 }
 
+const handleSearchProductByName = async (req, res) => {
+    const { keyProductName } = req.body
+
+    console.log(
+        `\n>>>>> Check key product name: ${keyProductName}\n`
+    )
+
+    const query = `select * from foods where name like '%${keyProductName}%'`
+
+    const [foods] = await pool.execute(query)
+
+    console.log(
+        `
+        \n>>>>> Check key product found: ${JSON.stringify(foods)}\n
+        `
+    )
+
+    return res.render('HomeScreen', { data: foods })
+}
+
 export {
     getLoginScreen,
     getSignUpScreen,
@@ -405,5 +425,6 @@ export {
     handleAddProduct,
     getDetailsProductScreen,
     getUpdateProductScreen,
-    handleUpdateProduct
+    handleUpdateProduct,
+    handleSearchProductByName
 }
