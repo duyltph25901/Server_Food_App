@@ -40,9 +40,8 @@
         <form method="get">
             <a href="#about">Người dùng</a>
         </form>
-        <form action="/handle-log-out" method="post">
-            <button type="submit" class="btn" style="color: red; font-weight: bold;">Đăng xuất</button>
-        </form>
+        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+            style="color: red; font-weight: bold;">Đăng xuất</button>
     </div>
     <div class="content">
         <!-- Tab bar -->
@@ -69,10 +68,10 @@
                                 Thức ăn
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Cơm</a></li>
-                                <li><a class="dropdown-item" href="#">Cơm chay</a></li>
-                                <li><a class="dropdown-item" href="#">Mì</a></li>
-                                <li><a class="dropdown-item" href="#">Thức ăn nhanh</a></li>
+                                <li><a class="dropdown-item" href="/rice">Cơm</a></li>
+                                <li><a class="dropdown-item" href="/rice-vegetarian">Cơm chay</a></li>
+                                <li><a class="dropdown-item" href="/noodle">Mì</a></li>
+                                <li><a class="dropdown-item" href="/fast-food">Thức ăn nhanh</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -81,10 +80,10 @@
                                 Đồ uống
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Sinh tố</a></li>
-                                <li><a class="dropdown-item" href="#">Nước giải khát</a></li>
-                                <li><a class="dropdown-item" href="#">Cà phê</a></li>
-                                <li><a class="dropdown-item" href="#">Trà sữa</a></li>
+                                <li><a class="dropdown-item" href="/smoothie">Sinh tố</a></li>
+                                <li><a class="dropdown-item" href="/carbonated-water">Nước giải khát</a></li>
+                                <li><a class="dropdown-item" href="/coffee">Cà phê</a></li>
+                                <li><a class="dropdown-item" href="/milk-tea">Trà sữa</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -93,11 +92,11 @@
                                 Bánh ngọt
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Cupcake</a></li>
-                                <li><a class="dropdown-item" href="#">Tart</a></li>
-                                <li><a class="dropdown-item" href="#">Su kem</a></li>
-                                <li><a class="dropdown-item" href="#">Bông lan</a></li>
-                                <li><a class="dropdown-item" href="#">Bánh mì</a></li>
+                                <li><a class="dropdown-item" href="/cupcake">Cupcake</a></li>
+                                <li><a class="dropdown-item" href="/tart">Tart</a></li>
+                                <li><a class="dropdown-item" href="/choxcake">Su kem</a></li>
+                                <li><a class="dropdown-item" href="/custard">Bông lan</a></li>
+                                <li><a class="dropdown-item" href="/bread">Bánh mì</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -106,11 +105,11 @@
                                 Đồ ăn vặt
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Khô bò</a></li>
-                                <li><a class="dropdown-item" href="#">Khô gà</a></li>
-                                <li><a class="dropdown-item" href="#">Bánh tráng</a></li>
-                                <li><a class="dropdown-item" href="#">Que cay</a></li>
-                                <li><a class="dropdown-item" href="#">Snack</a></li>
+                                <li><a class="dropdown-item" href="/dried-beef">Khô bò</a></li>
+                                <li><a class="dropdown-item" href="/dried-chicken">Khô gà</a></li>
+                                <li><a class="dropdown-item" href="/rice-paper">Bánh tráng</a></li>
+                                <li><a class="dropdown-item" href="/spicy-snack">Que cay</a></li>
+                                <li><a class="dropdown-item" href="/snack">Snack</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -181,6 +180,26 @@
                         </div>
                     </div>
                     <%}%>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Bạn sẽ đăng xuất tài khoản sau khi thực hiện
+                            hành động này!</h5>
+                    </div>
+                    <div class="modal-body">
+                        Bạn vẫn muốn tiếp tục?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
+                        <button type="button" class="btn btn-danger">Đăng xuất</button>
+                    </div>
+                </div>
             </div>
         </div>
         <hr>
