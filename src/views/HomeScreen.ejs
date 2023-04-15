@@ -144,28 +144,32 @@
                                     </span>
                                     <%}%>
                             </div>
-                            <ul class="rating">
-                                <li class="fa fa-star"></li>
-                                <li class="fa fa-star"></li>
-                                <li class="fa fa-star"></li>
-                                <li class="fa fa-star"></li>
-                                <li class="fa fa-star disable"></li>
-                            </ul>
                             <div class="product-content">
-                                <h3 class="title"><a href="#">
+                                <h3 class="title"><a href="/details-product/<%=data[i].id%>">
                                         <%=data[i].name%>
                                     </a></h3>
-                                <div class="price">
-                                    <%const formatPriceByVND=(price)=> {%>
-                                        <%= price.toLocaleString('vi', { style: 'currency' , currency: 'VND' }) %>
-                                            <%}%>
-                                                <%formatPriceByVND(data[i].price - (data[i].price * data[i].discount /
-                                                    100))%>
-                                                    <span>
-                                                        <%=(formatPriceByVND(data[i].price))%>
-                                                    </span>
-                                </div>
-                                <a class="add-to-cart" href="">Thêm vào giỏ hàng </a>
+                                <%if (data[i].discount> 0) {%>
+                                    <div class="price">
+                                        <%const formatPriceByVND=(price)=> {%>
+                                            <%= price.toLocaleString('vi', { style: 'currency' , currency: 'VND' }) %>
+                                                <%}%>
+                                                    <%formatPriceByVND(data[i].price - (data[i].price * data[i].discount
+                                                        / 100))%>
+                                                        <span>
+                                                            <%=(formatPriceByVND(data[i].price))%>
+                                                        </span>
+                                    </div>
+                                    <%} else {%>
+                                        <div class="price">
+                                            <%const formatPriceByVND=(price)=> {%>
+                                                <%= price.toLocaleString('vi', { style: 'currency' , currency: 'VND' })
+                                                    %>
+                                                    <%}%>
+                                                        <%formatPriceByVND(data[i].price - (data[i].price *
+                                                            data[i].discount / 100))%>
+                                        </div>
+                                        <%}%>
+                                            <a class="add-to-cart" href=""><br> </a>
                             </div>
                         </div>
                     </div>
