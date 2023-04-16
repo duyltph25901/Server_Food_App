@@ -21,21 +21,23 @@
                     <form class="input-box" action="/handle-sign-up" method="post">
                         <header style="font-size: 34px;">Đăng kí</header>
                         <div class="input-field">
-                            <input type="text" class="input" id="email" required autocomplete="off" name="email">
+                            <input type="text" class="input" id="email" required autocomplete="off" name="email"
+                                value="<%=inputOld.email%>">
                             <label for="email">Email</label>
                         </div>
                         <div class="input-field">
-                            <input type="text" class="input" id="email" required autocomplete="off" name="userName">
+                            <input type="text" class="input" id="email" required autocomplete="off" name="userName"
+                                value="<%=inputOld.userName%>">
                             <label for="email">Tên người dùng</label>
                         </div>
                         <div class="input-field">
                             <input type="password" class="input" id="password" autocomplete="off" required
-                                name="password">
+                                name="password" value="<%=inputOld.password%>">
                             <label for="password">Mật khẩu</label>
                         </div>
                         <div class="input-field">
-                            <input type="tel" class="input" id="password" required name="phoneNumber"
-                                autocomplete="off">
+                            <input type="tel" class="input" id="password" required name="phoneNumber" autocomplete="off"
+                                value="<%=inputOld.phoneNumber%>">
                             <label for="password">Số điện thoại</label>
                         </div>
                         <div class="input-field">
@@ -43,7 +45,9 @@
                         </div>
                         <%if(error) {%>
                             <div class="signin">
-                                <span style="color: red;">Đăng kí thất bại!</span>
+                                <span style="color: red;">
+                                    <%=errorMessage%>
+                                </span>
                             </div>
                             <%}%>
                                 <div class="signin">
