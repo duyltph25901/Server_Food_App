@@ -30,11 +30,10 @@
             <a href="#about">Doanh số</a>
         </form>
         <form method="get">
-            <a href="#about">Người dùng</a>
+            <a href="/user">Người dùng</a>
         </form>
-        <form action="/handle-log-out" method="post">
-            <button type="submit" class="btn" style="color: red; font-weight: bold;">Đăng xuất</button>
-        </form>
+        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+            style="color: red; font-weight: bold;">Đăng xuất</button>
     </div>
 
     <div class="content">
@@ -59,12 +58,6 @@
                             </form>
                         </li>
                     </ul>
-                    <!-- <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Tìm kiếm món ăn..."
-                            aria-label="Search">
-                        <button class="btn btn-outline-warning" style="border-color: #EEA734; color: black;"
-                            type="submit">Tìm</button>
-                    </form> -->
                 </div>
             </div>
         </nav>
@@ -96,8 +89,7 @@
                                     style="margin-right: 7px;">
                                     <button class="btn btn-success">Sửa</button>
                                 </form>
-                                <form action="/handle-delete-category-parent" method="post">
-                                    <input type="text" value="<%=data[i].id%>" hidden>
+                                <form action="/delete-category-parent/<%=data[i].id%>" method="get">
                                     <button type="submit" class="btn btn-danger">Xóa</button>
                                 </form>
                             </td>
@@ -106,11 +98,27 @@
                 </tbody>
             </table>
         </div>
-
-        <!-- Include Bootstrap JS -->
-        <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Bạn sẽ đăng xuất tài khoản sau khi thực hiện
+                            hành động này!</h5>
+                    </div>
+                    <div class="modal-body">
+                        Bạn vẫn muốn tiếp tục?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
+                        <form action="/handle-log-out" method="post">
+                            <button type="submit" class="btn btn-danger">Đăng xuất</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>

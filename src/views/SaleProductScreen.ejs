@@ -38,11 +38,10 @@
             <a href="#about">Doanh số</a>
         </form>
         <form method="get">
-            <a href="#about">Người dùng</a>
+            <a href="/user">Người dùng</a>
         </form>
-        <form action="/handle-log-out" method="post">
-            <button type="submit" class="btn" style="color: red; font-weight: bold;">Đăng xuất</button>
-        </form>
+        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+            style="color: red; font-weight: bold;">Đăng xuất</button>
     </div>
     <div class="content">
         <!-- Tab bar -->
@@ -128,7 +127,7 @@
             <div class="row">
                 <%for (let i=0; i<data.length; i++) {%>
                     <div class="col-md-3 col-sm-6">
-                        <div class="product-grid">
+                        <div class="product-grid shadow-lg">
                             <div class="product-image">
                                 <a href="#">
                                     <img class="pic-1" src="<%=data[i].image%>" style="height: 200px;">
@@ -141,7 +140,8 @@
                                     <li><a href="/update-foods/<%=data[i].id%>" data-tip="Cập nhật"><i
                                                 class="fa fa-edit"></i></a>
                                     </li>
-                                    <li><a href="" data-tip="Xóa sản phẩm"><i class="fa fa-remove"></i></a>
+                                    <li><a href="/delete-product/<%=data[i].id%>" data-tip="Xóa sản phẩm"><i
+                                                class="fa fa-remove"></i></a>
                                     </li>
                                 </ul>
                                 <%if(data[i].discount> 0) {%>
@@ -179,8 +179,31 @@
                                             <a class="add-to-cart" href=""><br> </a>
                             </div>
                         </div>
+                        <br>
                     </div>
                     <%}%>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Bạn sẽ đăng xuất tài khoản sau khi thực hiện
+                            hành động này!</h5>
+                    </div>
+                    <div class="modal-body">
+                        Bạn vẫn muốn tiếp tục?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
+                        <form action="/handle-log-out" method="post">
+                            <button type="submit" class="btn btn-danger">Đăng xuất</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
         <hr>

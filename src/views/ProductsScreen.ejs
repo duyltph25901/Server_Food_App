@@ -30,11 +30,10 @@
             <a href="#about">Doanh số</a>
         </form>
         <form method="get">
-            <a href="#about">Người dùng</a>
+            <a href="/user">Người dùng</a>
         </form>
-        <form action="/handle-log-out" method="post">
-            <button type="submit" class="btn" style="color: red; font-weight: bold;">Đăng xuất</button>
-        </form>
+        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+            style="color: red; font-weight: bold;">Đăng xuất</button>
     </div>
 
     <!-- Form input -->
@@ -64,9 +63,9 @@
 
             <div class="form-group">
                 <label for="image">Hình ảnh:</label>
-                <div class="custom-file">
-                    <input type="file" name="image" id="image" class="custom-file-input" accept="image/*" required>
-                    <label class="custom-file-label" for="image">Chọn file</label>
+                <div>
+                    <input type="file" name="image" id="image" accept="image/*" required class="form-control">
+                    <label for="image">Chọn file</label>
                 </div>
             </div>
 
@@ -95,6 +94,28 @@
 
             <button type="submit" class="btn" style="background-color: #EEA734; color: white;">Tạo món ăn mới</button>
         </form>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Bạn sẽ đăng xuất tài khoản sau khi thực hiện
+                        hành động này!</h5>
+                </div>
+                <div class="modal-body">
+                    Bạn vẫn muốn tiếp tục?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
+                    <form action="/handle-log-out" method="post">
+                        <button type="submit" class="btn btn-danger">Đăng xuất</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>
