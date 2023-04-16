@@ -34,7 +34,27 @@ import {
     getDriedChicken,
     getRicePaper,
     getSpicySnacks,
-    getSnack
+    getSnack,
+    handleDeleteCategoryParent,
+    handleDeleteCategoryChild,
+    getAllUserScreen,
+    getAllAdminScreen,
+    handleSearchUserByName,
+    getUserDetailsScreen,
+    handleDeleteUserById,
+    getUpdateUserScreen,
+    handleUpdateUserById,
+    getUpdateCategoryParentScreen,
+    handleUpdateCategoryParent,
+    getUpdateCategoryChildScreen,
+    handleUpdateCategoryChild,
+    getConfirmDeleteProductScreen,
+    handleDeleteProduct,
+    handleCancelDelete,
+    getConfirmDeleteCategoryChildScreen,
+    getConfirmDeleteCategoryParentScreen,
+    getConfirmDeleteUserScreen,
+    getConfirmDeleteAdminScreen
 } from '../controllers/web'
 import { requireLoggedIn, upload } from '../functions/middleware'
 import express from 'express'
@@ -71,6 +91,17 @@ const initWebRoutes = (app) => {
     app.get('/rice-paper', getRicePaper)
     app.get('/spicy-snack', getSpicySnacks)
     app.get('/snack', getSnack)
+    app.get('/user', getAllUserScreen)
+    app.get('/admin', getAllAdminScreen)
+    app.get('/details-users/:id', getUserDetailsScreen)
+    app.get('/update-user/:id', getUpdateUserScreen)
+    app.get('/update-category-parent/:id', getUpdateCategoryParentScreen)
+    app.get('/update-category-child/:id', getUpdateCategoryChildScreen)
+    app.get('/delete-product/:id', getConfirmDeleteProductScreen)
+    app.get('/delete-category-child/:id', getConfirmDeleteCategoryChildScreen)
+    app.get('/delete-category-parent/:id', getConfirmDeleteCategoryParentScreen)
+    app.get('/delete-user/:id', getConfirmDeleteUserScreen)
+    app.get('/delete-admin/:id', getConfirmDeleteAdminScreen)
 
     app.post('/handle-sign-up', handleSignUp)
     app.post('/handle-login', cookieParser(), handleLogin)
@@ -80,6 +111,15 @@ const initWebRoutes = (app) => {
     app.post('/handle-add-product', upload.single('image'), handleAddProduct)
     app.post('/handle-update-product', upload.single('image'), handleUpdateProduct)
     app.post('/search-products-by-name', handleSearchProductByName)
+    app.post('/handle-delete-category-parent/:id', handleDeleteCategoryParent)
+    app.post('/handle-delete-category-child/:id', handleDeleteCategoryChild)
+    app.post('/search-user-by-name', handleSearchUserByName)
+    app.post('/handle-delete-user/:id', handleDeleteUserById)
+    app.post('/handle-udpate-user', upload.single('image'), handleUpdateUserById)
+    app.post('/handle-update-category-parent', handleUpdateCategoryParent)
+    app.post('/handle-update-category-child', handleUpdateCategoryChild)
+    app.post('/handle-delete-product/:id', handleDeleteProduct)
+    app.post('/no-delete', handleCancelDelete)
 
     return app.use('/login', route)
 }
