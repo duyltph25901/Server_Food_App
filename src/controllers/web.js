@@ -5,6 +5,8 @@ import { storage } from '../configs/firebase'
 import multer from 'multer'
 import { setTimeout } from 'timers'
 
+var previousUrl = ''
+
 const getLoginScreen = (req, res) => {
     return res.render('LoginScreen.ejs', { error: false })
 }
@@ -14,6 +16,7 @@ const getSignUpScreen = (req, res) => {
 }
 
 const getHomeScreen = async (req, res) => {
+    previousUrl = req.originalUrl
     const userCurrent = await req.cookies.userCurrent
 
     console.log(
@@ -23,7 +26,7 @@ const getHomeScreen = async (req, res) => {
     )
 
     const [rows, fields] = await pool.execute(
-        `select * from foods limit 30`
+        `select * from foods where discount = 0 limit 30`
     )
 
     return res.render('HomeScreen.ejs', { data: rows })
@@ -38,6 +41,7 @@ const getCategoryScreen = async (req, res) => {
 }
 
 const getCategoriesParent = async (req, res) => {
+    previousUrl = req.originalUrl
     const [rows, fields] = await pool.execute(
         `select * from categories_parent`
     )
@@ -46,6 +50,12 @@ const getCategoriesParent = async (req, res) => {
 }
 
 const getCategoriesChild = async (req, res) => {
+    previousUrl = req.originalUrl
+    const page = parseInt(req.query.page) || 1
+    var perPage = 5
+    var start = (page - 1) * perPage
+    var end = page * perPage
+
     const [rows, fields] = await pool.execute(
         `
             select categories_child.id,
@@ -56,6 +66,7 @@ const getCategoriesChild = async (req, res) => {
         `
     )
 
+    // return res.render('CategoriesChild.ejs', { data: rows.slice(start, end) })
     return res.render('CategoriesChild.ejs', { data: rows })
 }
 
@@ -111,6 +122,7 @@ const getUpdateProductScreen = async (req, res) => {
 }
 
 const getSaleProductScreen = async (req, res) => {
+    previousUrl = req.originalUrl
     const [rows, fields] = await pool.execute(
         `select * from foods where discount > 0`
     )
@@ -119,6 +131,7 @@ const getSaleProductScreen = async (req, res) => {
 }
 
 const getRiceScreen = async (req, res) => {
+    previousUrl = req.originalUrl
     const [rows, fields] = await pool.execute(
         `select foods.*,
         categories_child.name as CategoryName
@@ -131,6 +144,7 @@ const getRiceScreen = async (req, res) => {
 }
 
 const getVegetarianRice = async (req, res) => {
+    previousUrl = req.originalUrl
     const [rows, fields] = await pool.execute(
         `select foods.*,
         categories_child.name as CategoryName
@@ -143,6 +157,7 @@ const getVegetarianRice = async (req, res) => {
 }
 
 const getNoodleScreen = async (req, res) => {
+    previousUrl = req.originalUrl
     const [rows, fields] = await pool.execute(
         `select foods.*,
         categories_child.name as CategoryName
@@ -155,6 +170,7 @@ const getNoodleScreen = async (req, res) => {
 }
 
 const getFastFoodScreen = async (req, res) => {
+    previousUrl = req.originalUrl
     const [rows, fields] = await pool.execute(
         `select foods.*,
         categories_child.name as CategoryName
@@ -167,6 +183,7 @@ const getFastFoodScreen = async (req, res) => {
 }
 
 const getSmoothieScreen = async (req, res) => {
+    previousUrl = req.originalUrl
     const [rows, fields] = await pool.execute(
         `select foods.*,
         categories_child.name as CategoryName
@@ -179,6 +196,7 @@ const getSmoothieScreen = async (req, res) => {
 }
 
 const getCarbonatedWarterScreen = async (req, res) => {
+    previousUrl = req.originalUrl
     const [rows, fields] = await pool.execute(
         `select foods.*,
         categories_child.name as CategoryName
@@ -191,6 +209,7 @@ const getCarbonatedWarterScreen = async (req, res) => {
 }
 
 const getCoffeeScreen = async (req, res) => {
+    previousUrl = req.originalUrl
     const [rows, fields] = await pool.execute(
         `select foods.*,
         categories_child.name as CategoryName
@@ -203,6 +222,7 @@ const getCoffeeScreen = async (req, res) => {
 }
 
 const getMilkTeaScreen = async (req, res) => {
+    previousUrl = req.originalUrl
     const [rows, fields] = await pool.execute(
         `select foods.*,
         categories_child.name as CategoryName
@@ -215,6 +235,7 @@ const getMilkTeaScreen = async (req, res) => {
 }
 
 const getCupCakeScreen = async (req, res) => {
+    previousUrl = req.originalUrl
     const [rows, fields] = await pool.execute(
         `select foods.*,
         categories_child.name as CategoryName
@@ -227,6 +248,7 @@ const getCupCakeScreen = async (req, res) => {
 }
 
 const getTartCakeScreen = async (req, res) => {
+    previousUrl = req.originalUrl
     const [rows, fields] = await pool.execute(
         `select foods.*,
         categories_child.name as CategoryName
@@ -239,6 +261,7 @@ const getTartCakeScreen = async (req, res) => {
 }
 
 const getChoxCakeScreen = async (req, res) => {
+    previousUrl = req.originalUrl
     const [rows, fields] = await pool.execute(
         `select foods.*,
         categories_child.name as CategoryName
@@ -251,6 +274,7 @@ const getChoxCakeScreen = async (req, res) => {
 }
 
 const getCustardCakeScreen = async (req, res) => {
+    previousUrl = req.originalUrl
     const [rows, fields] = await pool.execute(
         `select foods.*,
         categories_child.name as CategoryName
@@ -263,6 +287,7 @@ const getCustardCakeScreen = async (req, res) => {
 }
 
 const getBreadScreen = async (req, res) => {
+    previousUrl = req.originalUrl
     const [rows, fields] = await pool.execute(
         `select foods.*,
         categories_child.name as CategoryName
@@ -275,6 +300,7 @@ const getBreadScreen = async (req, res) => {
 }
 
 const getDriedBeef = async (req, res) => {
+    previousUrl = req.originalUrl
     const [rows, fields] = await pool.execute(
         `select foods.*,
         categories_child.name as CategoryName
@@ -287,6 +313,7 @@ const getDriedBeef = async (req, res) => {
 }
 
 const getDriedChicken = async (req, res) => {
+    previousUrl = req.originalUrl
     const [rows, fields] = await pool.execute(
         `select foods.*,
         categories_child.name as CategoryName
@@ -299,6 +326,7 @@ const getDriedChicken = async (req, res) => {
 }
 
 const getRicePaper = async (req, res) => {
+    previousUrl = req.originalUrl
     const [rows, fields] = await pool.execute(
         `select foods.*,
         categories_child.name as CategoryName
@@ -311,6 +339,7 @@ const getRicePaper = async (req, res) => {
 }
 
 const getSpicySnacks = async (req, res) => {
+    previousUrl = req.originalUrl
     const [rows, fields] = await pool.execute(
         `select foods.*,
         categories_child.name as CategoryName
@@ -323,6 +352,7 @@ const getSpicySnacks = async (req, res) => {
 }
 
 const getSnack = async (req, res) => {
+    previousUrl = req.originalUrl
     const [rows, fields] = await pool.execute(
         `select foods.*,
         categories_child.name as CategoryName
@@ -332,6 +362,167 @@ const getSnack = async (req, res) => {
     )
 
     return res.render('SaleProductScreen', { data: rows })
+}
+
+const getAllUserScreen = async (req, res) => {
+    previousUrl = req.originalUrl
+    const [rows, fields] = await pool.execute(
+        `select * from users where role = 0`
+    )
+
+    return res.render('UserScreen', { data: rows })
+}
+
+const getAllAdminScreen = async (req, res) => {
+    previousUrl = req.originalUrl
+    const [rows, fields] = await pool.execute(
+        `select * from users where role = 1`
+    )
+
+    return res.render('AdminsScreen', { data: rows })
+}
+
+const getUserDetailsScreen = async (req, res) => {
+    const id = req.params.id
+
+    console.log(
+        `
+        \n>>>>> Check id user details: ${id}\n
+        `
+    )
+
+    const [user] = await pool.execute(
+        `select * from users where id = ?`, [id]
+    )
+
+    console.log(
+        `
+        \n>>>>> Check user found details: ${JSON.stringify(user[0])}
+        `
+    )
+
+    return res.render('DetailsUserScreen', { data: user[0] })
+}
+
+const getUpdateUserScreen = async (req, res) => {
+    const id = req.params.id
+
+    console.log(
+        `
+        \n>>>>> Check id user update: ${id}\n
+        `
+    )
+
+    const [user] = await pool.execute(`select * from users where id = ?`, [id])
+
+    console.log(
+        `
+        \n>>>>> Check user found after update: ${JSON.stringify(user[0])}
+        `
+    )
+
+    return res.render('UpdateUserScreen', { data: user[0] })
+}
+
+const getUpdateCategoryParentScreen = async (req, res) => {
+    const id = req.params.id
+
+    console.log(
+        `
+        \n>>>>> Check id category parent udpate: ${id}\n
+        `
+    )
+
+    const [category] = await pool.execute(`select * from categories_parent where id = ?`, [id])
+
+    console.log(
+        `
+        \n>>>>> Check category udpate found by id: ${JSON.stringify(category[0])}\n
+        `
+    )
+
+    return res.render('UpdateCategoryParent', { data: category[0] })
+}
+
+const getUpdateCategoryChildScreen = async (req, res) => {
+    const id = req.params.id
+
+    console.log(
+        `
+        \n>>>>> Check id update category child: ${id}\n
+        `
+    )
+
+    const [categoryChild] = await pool.execute(
+        `select * from categories_child where id = ?`, [id]
+    )
+    const [categoryParent] = await pool.execute(
+        `select * from categories_parent`
+    )
+
+    console.log(
+        `
+        \n>>>>> Check category update found by id: ${id}\n
+        `
+    )
+
+    return res.render('UpdateCategoryChildScreen', {
+        data: categoryChild[0],
+        categoriesParent: categoryParent
+    })
+}
+
+const getConfirmDeleteProductScreen = async (req, res) => {
+    const id = req.params.id
+    const [rows, fields] = await pool.execute(`select * from foods limit 30`)
+    const [food] = await pool.execute(`select * from foods where id = ?`, [id])
+
+    return res.render('ConfirmDeleteProductScreen', {
+        data: rows,
+        objectCurrent: food[0]
+    })
+}
+
+const getConfirmDeleteCategoryChildScreen = async (req, res) => {
+    const id = req.params.id
+
+    const [category] = await pool.execute(`select * from categories_child where id = ?`, [id])
+    const [rows, fields] = await pool.execute(
+        `
+            select categories_child.id,
+            categories_child.name, 
+            categories_parent.name as categoryParentName
+            from categories_child
+            join categories_parent on categories_parent.id = categories_child.id_category_parent 
+        `
+    )
+
+    return res.render('ConfirmDeleteCategoryChildScreen', { objectCurrent: category[0], data: rows })
+}
+
+const getConfirmDeleteCategoryParentScreen = async (req, res) => {
+    const id = req.params.id
+
+    const [objectCurrent] = await pool.execute(`select * from categories_parent where id = ?`, [id])
+    const [rows, fields] = await pool.execute(`select * from categories_parent`)
+
+    return res.render('ConfirmDeleteCategoryParentScreen', { data: rows, objectCurrent: objectCurrent[0] })
+}
+
+const getConfirmDeleteUserScreen = async (req, res) => {
+    const id = req.params.id
+    const [user] = await pool.execute(`select * from users where id = ?`, [id])
+    const [rows, fields] = await pool.execute(`select * from users where role = 0`)
+
+    return res.render('confirmDeleteUserScreen', { data: rows, objectCurrent: user[0] })
+}
+
+const getConfirmDeleteAdminScreen = async (req, res) => {
+    const id = req.params.id
+    const [user] = await pool.execute(`select * from users where id = ?`, [id])
+    const [rows, fields] = await pool.execute(`select * from users where role = 1`)
+
+    return res.render('confirmDeleteUserScreen', { data: rows, objectCurrent: user[0] })
 }
 
 const handleSignUp = async (req, res) => {
@@ -542,7 +733,7 @@ const handleUpdateProduct = async (req, res) => {
         if (isImageUploadNull) {
 
             console.log(
-                `\n>>>>> Check req body update food:
+                `\n>>>>> Check req body update food (case user not update image):
                 Name: ${name}
                 Price: ${price}
                 Description: ${description}
@@ -569,17 +760,17 @@ const handleUpdateProduct = async (req, res) => {
         const filePath
             = `C:\\Users\\FPT\\Desktop\\MyProject\\Project_React_Native\\Food_App\\Server\\src\\public\\images\\${imageName}`
         storage.upload(filePath, {
-            destination: `image_product/${imageName}` // => đây là đường dẫn tới folder ảnh trên firebase
+            destination: `image_product_update/${imageName}` // => đây là đường dẫn tới folder ảnh trên firebase
         }).then(() => {
             // ================ handle get to http image ======================
-            const file = storage.file(`image_product/${imageName}`)
+            const file = storage.file(`image_product_update/${imageName}`)
             file.getSignedUrl({
                 action: 'read',
                 expires: '03-17-2150'
             })
                 .then(async (url) => {
                     console.log(
-                        `\n>>>>> Check req body update food:
+                        `\n>>>>> Check req body update food (case user update image):
                         Name: ${name}
                         Price: ${price}
                         Description: ${description}
@@ -632,6 +823,246 @@ const handleSearchProductByName = async (req, res) => {
     return res.render('HomeScreen', { data: foods })
 }
 
+const handleDeleteCategoryParent = async (req, res) => {
+    const id = req.params.id
+
+    console.log(
+        `
+        \n>>>>> Check id category parent delete: ${id}\n
+        `
+    )
+
+    try {
+        await pool.execute(`delete from categories_parent where id = ?`, [id])
+        return res.redirect(previousUrl)
+    } catch (err) {
+        return res.send(err)
+    }
+}
+
+const handleDeleteCategoryChild = async (req, res) => {
+    const id = req.params.id
+
+    console.log(
+        `
+        \n>>>>> Check id category parent delete: ${id}\n
+        `
+    )
+
+    try {
+        await pool.execute(`delete from categories_child where id = ?`, [id])
+        return res.redirect(previousUrl)
+    } catch (err) {
+        return res.send(err)
+    }
+}
+
+const handleSearchUserByName = async (req, res) => {
+    const { keyUserName } = req.body
+
+    console.log(
+        `
+        \n>>>>> Check key user name search: ${keyUserName}\n
+        `
+    )
+
+    const sql = `select * from users where username like '%${keyUserName}%'`
+    const [users] = await pool.execute(sql)
+
+    console.log(
+        `
+        >>>>> Check users found: ${JSON.stringify(users)}\n
+        `
+    );
+
+    if (keyUserName) {
+        return res.render('ResultFoundUserScreen', { data: users })
+    }
+
+    return res.redirect('/user')
+}
+
+const handleDeleteUserById = async (req, res) => {
+    const id = req.params.id
+
+    console.log(
+        `
+        \n>>>>> Check id user delete: ${id}\n
+        `
+    )
+
+    try {
+        await pool.execute(
+            `delete from users where id = ?`, [id]
+        )
+
+        return res.redirect(previousUrl)
+    } catch (err) {
+        return res.send(err)
+    }
+}
+
+const handleUpdateUserById = async (req, res) => {
+    const { imageOld, email, userName, pass, phoneNumber, createdAt, role, id } = req.body
+    const updatedAt = getTimeNow()
+    var imageName = ''
+    let isImageUploadNull = true
+
+    const upload = multer().single('image_user')
+    upload(req, res, async function (err) {
+        if (req.fileValidationError) {
+            return res.send(req.fileValidationError)
+        }
+        else if (!req.file) { // image upload null => user not update image
+            imageName = imageOld
+            isImageUploadNull = true
+        }
+        else if (err instanceof multer.MulterError) {
+            return res.send(`Error 1: ${err}`)
+        }
+        else if (err) {
+            return res.send(`Error 2: ${err}`)
+        } else { // true case => user update image
+            imageName = await req.file.filename
+            isImageUploadNull = false
+        }
+    })
+    // =============== handle upload file ===================
+
+    setTimeout(async () => {
+        // user not update image
+        if (isImageUploadNull) {
+
+            console.log(
+                `\n>>>>> Check req body update user (case user not update image):
+                User name: ${userName}
+                Email: ${email}
+                Link image old: ${imageOld}
+                Password: ${pass}%
+                Image link: ${imageOld == imageName}
+                Phone number: ${phoneNumber}
+                ID: ${id}
+                Role: ${role}
+                Created at: ${createdAt}
+                Last update: ${updatedAt}\n`
+            )
+
+            await pool.execute(
+                `update users
+                set userName = ?, email = ?, image = ?, password = ?, phoneNumber = ?, role = ?, created_at = ?, updated_at = ? where id = ?`,
+                [userName, email, imageOld, pass, phoneNumber, role, createdAt, updatedAt, id]
+            )
+
+            return res.redirect('/user')
+        }
+
+        // user update image
+        // ================= handle upload to firebase ========================
+        const filePath
+            = `C:\\Users\\FPT\\Desktop\\MyProject\\Project_React_Native\\Food_App\\Server\\src\\public\\images\\${imageName}`
+        storage.upload(filePath, {
+            destination: `avatar_user_update/${imageName}` // => đây là đường dẫn tới folder ảnh trên firebase
+        }).then(() => {
+            // ================ handle get to http image ======================
+            const file = storage.file(`avatar_user_update/${imageName}`)
+            file.getSignedUrl({
+                action: 'read',
+                expires: '03-17-2150'
+            })
+                .then(async (url) => {
+                    console.log(
+                        `\n>>>>> Check req body update user (case user update image):
+                        User name: ${userName}
+                        Email: ${email}
+                        Link image old: ${imageOld}
+                        Password: ${pass}%
+                        New image link: ${url[0]}
+                        Phone number: ${phoneNumber}
+                        ID: ${id}
+                        Role: ${role}
+                        Created at: ${createdAt}
+                        Last update: ${updatedAt}\n`
+                    )
+                    await pool.execute(
+                        `update users
+                        set userName = ?, email = ?, image = ?, password = ?, phoneNumber = ?, role = ?, created_at = ?, updated_at = ? where id = ?`,
+                        [userName, email, url[0], pass, phoneNumber, role, createdAt, updatedAt, id]
+                    )
+
+                    return res.redirect('/user')
+                })
+                .catch((err) => {
+                    console.log(err);
+                    return res.redirect('/')
+                })
+            // ================ handle get to http image ======================
+        }).catch((err) => {
+            console.log(err);
+            return res.redirect('/')
+        })
+        // ================= handle upload to firebase ========================
+    }, 2000)
+}
+
+const handleUpdateCategoryParent = async (req, res) => {
+    const { categoryParentName, id } = req.body
+
+    console.log(
+        `
+        \n>>>>> Check body category parent update:
+        Category parent name: ${categoryParentName}
+        ID: ${id}
+        `
+    )
+
+    await pool.execute(
+        `update categories_parent set name = ? where id = ?`, [categoryParentName, id]
+    )
+
+    return res.redirect('/categories-parent')
+}
+
+const handleUpdateCategoryChild = async (req, res) => {
+    const { categoryChildName, idCategoryParent, id } = req.body
+
+    console.log(
+        `
+        \n>>>>> Check body update category child:
+        Category child name: ${categoryChildName}
+        ID category parent: ${idCategoryParent}
+        ID: ${id}\n
+        `
+    )
+
+    await pool.execute(
+        `update categories_child set name = ?, id_category_parent = ? where id = ?`, [categoryChildName, idCategoryParent, id]
+    )
+
+    return res.redirect('/categories-child')
+}
+
+const handleDeleteProduct = async (req, res) => {
+    const id = req.params.id
+
+    console.log(
+        `
+        \n>>>>> Check id product delete: ${id}\n
+        `
+    )
+
+    try {
+        await pool.execute(`delete from foods where id = ?`, [id])
+
+        return res.redirect(previousUrl)
+    } catch (err) {
+        return res.send(err)
+    }
+}
+
+const handleCancelDelete = async (req, res) => {
+    res.redirect(previousUrl)
+}
+
 export {
     getLoginScreen,
     getSignUpScreen,
@@ -668,5 +1099,25 @@ export {
     getDriedChicken,
     getRicePaper,
     getSpicySnacks,
-    getSnack
+    getSnack,
+    handleDeleteCategoryParent,
+    handleDeleteCategoryChild,
+    getAllUserScreen,
+    getAllAdminScreen,
+    handleSearchUserByName,
+    getUserDetailsScreen,
+    handleDeleteUserById,
+    getUpdateUserScreen,
+    handleUpdateUserById,
+    getUpdateCategoryParentScreen,
+    handleUpdateCategoryParent,
+    getUpdateCategoryChildScreen,
+    handleUpdateCategoryChild,
+    getConfirmDeleteProductScreen,
+    handleDeleteProduct,
+    handleCancelDelete,
+    getConfirmDeleteCategoryChildScreen,
+    getConfirmDeleteCategoryParentScreen,
+    getConfirmDeleteUserScreen,
+    getConfirmDeleteAdminScreen
 }
