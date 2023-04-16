@@ -4,6 +4,7 @@ import { pool } from '../configs/index'
 import { storage } from '../configs/firebase'
 import multer from 'multer'
 import { setTimeout } from 'timers'
+import { validateEmail, validatePhoneNumber, validatePassword } from '../public/js/validate'
 
 var previousUrl = ''
 
@@ -12,7 +13,17 @@ const getLoginScreen = (req, res) => {
 }
 
 const getSignUpScreen = (req, res) => {
-    return res.render('SignUpScreen.ejs', { error: false })
+    const oldInput = {
+        email: '',
+        userName: '',
+        password: '',
+        phoneNumber: ''
+    }
+
+    return res.render('SignUpScreen.ejs', {
+        error: false,
+        inputOld: oldInput
+    })
 }
 
 const getHomeScreen = async (req, res) => {
@@ -533,18 +544,63 @@ const handleSignUp = async (req, res) => {
     const createdAt = getTimeNow()
     const updateAt = createdAt
 
+    // tìm kiếm email tạo mới đã có trong db chưa
     const [users] = await pool.execute(
         `select email from users where email = ?`, [email]
     )
+    // tìm kiếm số điện thoại tạo mới đã có trong db chưa
+    const [phoneNumberFound] = await pool.execute(`select phoneNumber from users where phoneNumber = ?`, [phoneNumber])
 
     console.log(
         `
             \n>>>>> Check user found by email: ${JSON.stringify(users[0])}\n
         `
-    );
+    )
+
+    console.log(
+        `
+            \n>>>>> Check phone number found: ${JSON.stringify(phoneNumberFound[0])}\n
+        `
+    )
+
+    // giữ lại data input cũ để khi reload lại trang người dùng không cần nhập lại từ đầu
+    const oldInput = {
+        email: email,
+        userName: userName,
+        password: password,
+        phoneNumber: phoneNumber
+    }
 
     if (users[0]) {
-        return res.render('SignUpScreen.ejs', { error: true })
+        return res.render('SignUpScreen.ejs', {
+            error: true,
+            errorMessage: 'Tài khoản email này đã tồn tại trong hệ thống!',
+            inputOld: oldInput
+        })
+    } if (!validateEmail(email)) {
+        return res.render('SignUpScreen.ejs', {
+            error: true,
+            errorMessage: 'Email không đúng định dạng!',
+            inputOld: oldInput
+        })
+    } if (!validatePassword(password)) {
+        return res.render('SignUpScreen.ejs', {
+            error: true,
+            errorMessage: 'Mật khẩu phải chứa tối thiểu 6 kí tự bao gồm cả chữ cái viết hoa, viết thường và kí tự đặc biệt!',
+            inputOld: oldInput
+        })
+    } if (phoneNumberFound[0]) {
+        return res.render('SignUpScreen.ejs', {
+            error: true,
+            errorMessage: 'Số điện thoại này đã được đăng kí trước đó!',
+            inputOld: oldInput
+        })
+    } if (!validatePhoneNumber(phoneNumber)) {
+        return res.render('SignUpScreen.ejs', {
+            error: true,
+            errorMessage: 'Số điện thoại không đúng định dạng!',
+            inputOld: oldInput
+        })
     }
 
     console.log(
@@ -563,6 +619,15 @@ const handleSignUp = async (req, res) => {
 }
 
 const handleLogin = async (req, res) => {
+
+    // clear all cookie before
+    const cookies = req.cookies
+    for (const cookieName in cookies) {
+        res.clearCookie(cookieName)
+    }
+
+    console.log(`\n>>>>> Check cookie status: Deleted all!\n`);
+
     const { email, password } = req.body
 
     // check email is exited in data
