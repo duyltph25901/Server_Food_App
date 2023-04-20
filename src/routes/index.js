@@ -1,5 +1,7 @@
 import initWebRoutes from "./web"
+import initAPIRoute from "./API"
 
 export {
-    initWebRoutes
+    initWebRoutes,
+    initAPIRoute
 }
