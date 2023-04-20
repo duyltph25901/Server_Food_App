@@ -1,61 +1,4 @@
-import {
-    getLoginScreen,
-    getSignUpScreen,
-    getHomeScreen,
-    getCategoryScreen,
-    getCategoriesParent,
-    getCategoriesChild,
-    handleSignUp,
-    handleLogin,
-    handleLogOut,
-    handleAddCategoryParent,
-    handleAddCategoryChild,
-    getProductScreen,
-    handleAddProduct,
-    getDetailsProductScreen,
-    getUpdateProductScreen,
-    handleUpdateProduct,
-    handleSearchProductByName,
-    getSaleProductScreen,
-    getRiceScreen,
-    getVegetarianRice,
-    getNoodleScreen,
-    getFastFoodScreen,
-    getCoffeeScreen,
-    getSmoothieScreen,
-    getCarbonatedWarterScreen,
-    getMilkTeaScreen,
-    getBreadScreen,
-    getCustardCakeScreen,
-    getChoxCakeScreen,
-    getCupCakeScreen,
-    getTartCakeScreen,
-    getDriedBeef,
-    getDriedChicken,
-    getRicePaper,
-    getSpicySnacks,
-    getSnack,
-    handleDeleteCategoryParent,
-    handleDeleteCategoryChild,
-    getAllUserScreen,
-    getAllAdminScreen,
-    handleSearchUserByName,
-    getUserDetailsScreen,
-    handleDeleteUserById,
-    getUpdateUserScreen,
-    handleUpdateUserById,
-    getUpdateCategoryParentScreen,
-    handleUpdateCategoryParent,
-    getUpdateCategoryChildScreen,
-    handleUpdateCategoryChild,
-    getConfirmDeleteProductScreen,
-    handleDeleteProduct,
-    handleCancelDelete,
-    getConfirmDeleteCategoryChildScreen,
-    getConfirmDeleteCategoryParentScreen,
-    getConfirmDeleteUserScreen,
-    getConfirmDeleteAdminScreen
-} from '../controllers/web'
+import web from '../controllers/web'
 import { requireLoggedIn, upload } from '../functions/middleware'
 import express from 'express'
 import cookieParser from 'cookie-parser'
@@ -63,63 +6,63 @@ import cookieParser from 'cookie-parser'
 let route = express.Router()
 
 const initWebRoutes = (app) => {
-    app.get('/login', getLoginScreen)
-    app.get('/sign-up', getSignUpScreen)
-    app.get('/', cookieParser(), requireLoggedIn, getHomeScreen)
-    app.get('/category', getCategoryScreen)
-    app.get('/categories-parent', getCategoriesParent)
-    app.get('/categories-child', getCategoriesChild)
-    app.get('/product', getProductScreen)
-    app.get('/details-product/:id', getDetailsProductScreen)
-    app.get('/update-foods/:id', getUpdateProductScreen)
-    app.get('/sale', getSaleProductScreen)
-    app.get('/rice', getRiceScreen)
-    app.get('/rice-vegetarian', getVegetarianRice)
-    app.get('/noodle', getNoodleScreen)
-    app.get('/fast-food', getFastFoodScreen)
-    app.get('/milk-tea', getMilkTeaScreen)
-    app.get('/carbonated-water', getCarbonatedWarterScreen)
-    app.get('/coffee', getCoffeeScreen)
-    app.get('/smoothie', getSmoothieScreen)
-    app.get('/bread', getBreadScreen)
-    app.get('/custard', getCustardCakeScreen)
-    app.get('/cupcake', getCupCakeScreen)
-    app.get('/choxcake', getChoxCakeScreen)
-    app.get('/tart', getTartCakeScreen)
-    app.get('/dried-beef', getDriedBeef)
-    app.get('/dried-chicken', getDriedChicken)
-    app.get('/rice-paper', getRicePaper)
-    app.get('/spicy-snack', getSpicySnacks)
-    app.get('/snack', getSnack)
-    app.get('/user', getAllUserScreen)
-    app.get('/admin', getAllAdminScreen)
-    app.get('/details-users/:id', getUserDetailsScreen)
-    app.get('/update-user/:id', getUpdateUserScreen)
-    app.get('/update-category-parent/:id', getUpdateCategoryParentScreen)
-    app.get('/update-category-child/:id', getUpdateCategoryChildScreen)
-    app.get('/delete-product/:id', getConfirmDeleteProductScreen)
-    app.get('/delete-category-child/:id', getConfirmDeleteCategoryChildScreen)
-    app.get('/delete-category-parent/:id', getConfirmDeleteCategoryParentScreen)
-    app.get('/delete-user/:id', getConfirmDeleteUserScreen)
-    app.get('/delete-admin/:id', getConfirmDeleteAdminScreen)
+    app.get('/login', web.getLoginScreen)
+    app.get('/sign-up', web.getSignUpScreen)
+    app.get('/', cookieParser(), requireLoggedIn, web.getHomeScreen)
+    app.get('/category', web.getCategoryScreen)
+    app.get('/categories-parent', web.getCategoriesParent)
+    app.get('/categories-child', web.getCategoriesChild)
+    app.get('/product', web.getProductScreen)
+    app.get('/details-product/:id', web.getDetailsProductScreen)
+    app.get('/update-foods/:id', web.getUpdateProductScreen)
+    app.get('/sale', web.getSaleProductScreen)
+    app.get('/rice', web.getRiceScreen)
+    app.get('/rice-vegetarian', web.getVegetarianRice)
+    app.get('/noodle', web.getNoodleScreen)
+    app.get('/fast-food', web.getFastFoodScreen)
+    app.get('/milk-tea', web.getMilkTeaScreen)
+    app.get('/carbonated-water', web.getCarbonatedWarterScreen)
+    app.get('/coffee', web.getCoffeeScreen)
+    app.get('/smoothie', web.getSmoothieScreen)
+    app.get('/bread', web.getBreadScreen)
+    app.get('/custard', web.getCustardCakeScreen)
+    app.get('/cupcake', web.getCupCakeScreen)
+    app.get('/choxcake', web.getChoxCakeScreen)
+    app.get('/tart', web.getTartCakeScreen)
+    app.get('/dried-beef', web.getDriedBeef)
+    app.get('/dried-chicken', web.getDriedChicken)
+    app.get('/rice-paper', web.getRicePaper)
+    app.get('/spicy-snack', web.getSpicySnacks)
+    app.get('/snack', web.getSnack)
+    app.get('/user', web.getAllUserScreen)
+    app.get('/admin', web.getAllAdminScreen)
+    app.get('/details-users/:id', web.getUserDetailsScreen)
+    app.get('/update-user/:id', web.getUpdateUserScreen)
+    app.get('/update-category-parent/:id', web.getUpdateCategoryParentScreen)
+    app.get('/update-category-child/:id', web.getUpdateCategoryChildScreen)
+    app.get('/delete-product/:id', web.getConfirmDeleteProductScreen)
+    app.get('/delete-category-child/:id', web.getConfirmDeleteCategoryChildScreen)
+    app.get('/delete-category-parent/:id', web.getConfirmDeleteCategoryParentScreen)
+    app.get('/delete-user/:id', web.getConfirmDeleteUserScreen)
+    app.get('/delete-admin/:id', web.getConfirmDeleteAdminScreen)
 
-    app.post('/handle-sign-up', handleSignUp)
-    app.post('/handle-login', cookieParser(), handleLogin)
-    app.post('/handle-log-out', cookieParser(), handleLogOut)
-    app.post('/handle-add-category-parent', handleAddCategoryParent)
-    app.post('/handle-add-category-child', handleAddCategoryChild)
-    app.post('/handle-add-product', upload.single('image'), handleAddProduct)
-    app.post('/handle-update-product', upload.single('image'), handleUpdateProduct)
-    app.post('/search-products-by-name', handleSearchProductByName)
-    app.post('/handle-delete-category-parent/:id', handleDeleteCategoryParent)
-    app.post('/handle-delete-category-child/:id', handleDeleteCategoryChild)
-    app.post('/search-user-by-name', handleSearchUserByName)
-    app.post('/handle-delete-user/:id', handleDeleteUserById)
-    app.post('/handle-udpate-user', upload.single('image'), handleUpdateUserById)
-    app.post('/handle-update-category-parent', handleUpdateCategoryParent)
-    app.post('/handle-update-category-child', handleUpdateCategoryChild)
-    app.post('/handle-delete-product/:id', handleDeleteProduct)
-    app.post('/no-delete', handleCancelDelete)
+    app.post('/handle-sign-up', web.handleSignUp)
+    app.post('/handle-login', cookieParser(), web.handleLogin)
+    app.post('/handle-log-out', cookieParser(), web.handleLogOut)
+    app.post('/handle-add-category-parent', web.handleAddCategoryParent)
+    app.post('/handle-add-category-child', web.handleAddCategoryChild)
+    app.post('/handle-add-product', upload.single('image'), web.handleAddProduct)
+    app.post('/handle-update-product', upload.single('image'), web.handleUpdateProduct)
+    app.post('/search-products-by-name', web.handleSearchProductByName)
+    app.post('/handle-delete-category-parent/:id', web.handleDeleteCategoryParent)
+    app.post('/handle-delete-category-child/:id', web.handleDeleteCategoryChild)
+    app.post('/search-user-by-name', web.handleSearchUserByName)
+    app.post('/handle-delete-user/:id', web.handleDeleteUserById)
+    app.post('/handle-udpate-user', upload.single('image'), web.handleUpdateUserById)
+    app.post('/handle-update-category-parent', web.handleUpdateCategoryParent)
+    app.post('/handle-update-category-child', web.handleUpdateCategoryChild)
+    app.post('/handle-delete-product/:id', web.handleDeleteProduct)
+    app.post('/no-delete', web.handleCancelDelete)
 
     return app.use('/login', route)
 }
