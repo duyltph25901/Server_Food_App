@@ -708,7 +708,7 @@ const handleAddProduct = async (req, res) => {
     var imageName = ''
 
     const upload = multer().single('image_product')
-    upload(req, res, async function (err) {
+    upload(req, res, function (err) {
         if (req.fileValidationError) {
             return res.send(req.fileValidationError);
         }
@@ -721,7 +721,7 @@ const handleAddProduct = async (req, res) => {
         else if (err) {
             return res.send(`Error 2: ${err}`);
         }
-        imageName = await req.file.filename
+        imageName = req.file.filename
     });
     // =============== handle upload file ===================
 
@@ -1128,7 +1128,7 @@ const handleCancelDelete = async (req, res) => {
     res.redirect(previousUrl)
 }
 
-export {
+const web = {
     getLoginScreen,
     getSignUpScreen,
     getHomeScreen,
@@ -1186,3 +1186,5 @@ export {
     getConfirmDeleteUserScreen,
     getConfirmDeleteAdminScreen
 }
+
+export default web
