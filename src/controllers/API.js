@@ -131,7 +131,7 @@ const handleLoginUser = async (req, res) => {
 const handleSearchFoodByName = async (req, res) => {
     const { keyName } = req.body
 
-    const sqlQuery = `select * from foods where name like '%${keyName}%' and status = 1 limit 30`
+    const sqlQuery = `select * from foods where name like '%${keyName}%'`
     const [results] = await pool.execute(
         sqlQuery
     )
