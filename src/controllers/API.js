@@ -10,6 +10,24 @@ const getAllUser = async (req, res) => {
     return res.status(200).json(rows)
 }
 
+const getHomeProduct = async (req, res) => {
+    const [rows, fields] = await pool.execute(
+        `
+        SELECT 
+        foods.id, foods.name, description,
+        price, image, status, discount
+        , categories_child.name as category
+        FROM foods
+        JOIN categories_child on foods.category_id = categories_child.id
+        where categories_child.name in ('Cơm', 'Trà sữa', 'Bánh mì', 'Bánh tráng', 'Mì')
+        and status = 1
+        limit 30
+        `
+    )
+
+    return res.status(200).json(rows.sort(() => Math.random() - 0.5))
+}
+
 const handleSignUpUser = async (req, res) => {
     const { userName, email, password, phoneNumber } = req.body
     const id = uuidv4()
@@ -82,9 +100,55 @@ const handleSignUpUser = async (req, res) => {
     })
 }
 
+const handleLoginUser = async (req, res) => {
+    const { email, password } = req.body
+
+    const [userFound] = await pool.execute(
+        `select * from users where email = ? and role = 0`, [email]
+    )
+
+    console.log(
+        `
+        \n>>>>> Check user found: ${JSON.stringify(userFound[0])}
+        `
+    )
+
+    if (!userFound[0]) {
+        return res.status(404).json({
+            message: 'Không tìm thấy email!'
+        })
+    } if (userFound[0].password !== password) {
+        return res.status(405).json({
+            message: 'Mật khẩu không đúng!'
+        })
+    }
+
+    return res.status(200).json({
+        objectCurrent: userFound[0]
+    })
+}
+
+const handleSearchFoodByName = async (req, res) => {
+    const { keyName } = req.body
+
+    const sqlQuery = `select * from foods where name like '%${keyName}%' and status = 1 limit 30`
+    const [results] = await pool.execute(
+        sqlQuery
+    )
+
+    // => results is arr
+
+    return res.status(200).json({
+        results: results
+    })
+}
+
 const API = {
     getAllUser,
-    handleSignUpUser
+    getHomeProduct,
+    handleSignUpUser,
+    handleLoginUser,
+    handleSearchFoodByName
 }
 
 export default API
