@@ -236,6 +236,20 @@ const handleUpdateEmail = async (req, res) => {
     })
 }
 
+const handleUpdatePassword = async (req, res) => {
+    const { password, idUser } = req.body
+
+    await pool.execute(
+        `update users
+        set password = ?
+        where id = ?`, [password, idUser]
+    )
+
+    return res.status(200).json({
+        message: 'Update password user successful!'
+    })
+}
+
 const API = {
     getAllUser,
     getHomeProduct,
@@ -245,7 +259,8 @@ const API = {
     getAllRice,
     handleUpdatePhoneNumber,
     findUserById,
-    handleUpdateEmail
+    handleUpdateEmail,
+    handleUpdatePassword
 }
 
 export default API

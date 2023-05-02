@@ -14,6 +14,7 @@ const initAPIRoute = (app) => {
     route.post('/handle-search-product-by-name', api.handleSearchFoodByName)
     route.post('/handle-update-phone-number-user', api.handleUpdatePhoneNumber)
     route.post('/handle-update-email-user', api.handleUpdateEmail)
+    route.post('/handle-update-password-user', api.handleUpdatePassword)
 
     return app.use('/api/v1', route)
 }
