@@ -28,6 +28,23 @@ const getHomeProduct = async (req, res) => {
     return res.status(200).json(rows.sort(() => Math.random() - 0.5))
 }
 
+const getAllRice = async (req, res) => {
+    const [rows, fields] = await pool.execute(
+        `
+        SELECT 
+        foods.id, foods.name, description,
+        price, image, status, discount
+        , categories_child.name as category
+        FROM foods
+        JOIN categories_child on foods.category_id = categories_child.id
+        where categories_child.name in ('Cơm')
+        and status = 1
+        `
+    )
+
+    return res.status(200).json(rows.sort(() => Math.random() - 0.5))
+}
+
 const handleSignUpUser = async (req, res) => {
     const { userName, email, password, phoneNumber } = req.body
     const id = uuidv4()
@@ -143,12 +160,92 @@ const handleSearchFoodByName = async (req, res) => {
     })
 }
 
+const handleUpdatePhoneNumber = async (req, res) => {
+    const { phoneNumber, idUser } = req.body
+
+    // find phoneNumber in db
+    const [phoneNumberFound] = await pool.execute(
+        `select phoneNumber from users where phoneNumber = ?`, [phoneNumber]
+    )
+
+    console.log(
+        `
+        \n>>>>> Check phone number found: ${phoneNumberFound[0]}\n
+        `
+    )
+
+    if (phoneNumberFound[0]) {
+        return res.status(405).json({
+            message: 'Số điện thoại đã được đăng kí trước đó!'
+        })
+    }
+
+    // handle update phone number
+    await pool.execute(
+        `update users
+        set phoneNumber = ?
+        where id = ?`, [phoneNumber, idUser]
+    )
+
+    return res.status(200).json({
+        message: 'Cập nhật số điện thoại thành công!'
+    })
+}
+
+const findUserById = async (req, res) => {
+    const idUser = req.params.id
+
+    const [user] = await pool.execute(
+        'select * from users where id = ?', [idUser]
+    )
+
+    console.log(
+        `
+        \n>>>>> Check user found by id: ${JSON.stringify(user[0])}\n
+        `
+    )
+
+    return res.status(200).json(user[0])
+}
+
+const handleUpdateEmail = async (req, res) => {
+    const { email, idUser } = req.body
+
+    // find email
+    const [emailFound] = await pool.execute(
+        `select email from users where email = ?`, [email]
+    )
+
+    if (emailFound[0]) {
+        return res.status(405).json({
+            message: 'Email đã được đăng kí trước đó!'
+        })
+    }
+
+    // handle update email
+    await pool.execute(
+        `
+        update users
+        set email = ?
+        where id = ?
+        `, [email, idUser]
+    )
+
+    return res.status(200).json({
+        message: 'Cập nhật email thành công!'
+    })
+}
+
 const API = {
     getAllUser,
     getHomeProduct,
     handleSignUpUser,
     handleLoginUser,
-    handleSearchFoodByName
+    handleSearchFoodByName,
+    getAllRice,
+    handleUpdatePhoneNumber,
+    findUserById,
+    handleUpdateEmail
 }
 
 export default API
