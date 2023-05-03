@@ -15,6 +15,7 @@ const initAPIRoute = (app) => {
     route.post('/handle-update-phone-number-user', api.handleUpdatePhoneNumber)
     route.post('/handle-update-email-user', api.handleUpdateEmail)
     route.post('/handle-update-password-user', api.handleUpdatePassword)
+    route.post('/handle-update-user-info', api.handleUpdateUserInfo)
 
     return app.use('/api/v1', route)
 }

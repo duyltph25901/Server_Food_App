@@ -250,6 +250,64 @@ const handleUpdatePassword = async (req, res) => {
     })
 }
 
+const handleUpdateUserInfo = async (req, res) => {
+    const { fieldUpdateValue, updated_at, idUser, flag } = req.body
+    let message = ''
+
+    switch (flag) {
+        case 0: {
+            // handle update
+            await pool.execute(
+                `update users
+                set userName = ?, updated_at = ?
+                where id = ?`, [fieldUpdateValue, updated_at, idUser]
+            )
+
+            message = 'Cập nhật tên đăng nhập thành công!'
+            break
+        }
+        case 1: {
+            await pool.execute(
+                `update users
+                set bio = ?, updated_at = ?
+                where id = ?`, [fieldUpdateValue, updated_at, idUser]
+            )
+
+            message = 'Cập nhật bio thành công!'
+            break
+        }
+        case 2: {
+            await pool.execute(
+                `update users 
+                set gender = ?, updated_at = ?
+                where id = ?`, [fieldUpdateValue, updated_at, idUser]
+            )
+
+            message = 'Cập nhật giới tính thành công!'
+            break
+        }
+        case 3: {
+            await pool.execute(
+                `
+                update users
+                set dob = ?, updated_at = ?
+                where id = ?
+                `, [fieldUpdateValue, updated_at, idUser]
+            )
+
+            message = 'Cập nhật ngày sinh người dùng thành công!'
+            break
+        }
+        default: {
+            break
+        }
+    }
+
+    return res.status(200).json({
+        message: message
+    })
+}
+
 const API = {
     getAllUser,
     getHomeProduct,
@@ -260,7 +318,8 @@ const API = {
     handleUpdatePhoneNumber,
     findUserById,
     handleUpdateEmail,
-    handleUpdatePassword
+    handleUpdatePassword,
+    handleUpdateUserInfo
 }
 
 export default API
