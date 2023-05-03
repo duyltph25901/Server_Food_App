@@ -148,7 +148,12 @@ const handleLoginUser = async (req, res) => {
 const handleSearchFoodByName = async (req, res) => {
     const { keyName } = req.body
 
-    const sqlQuery = `select * from foods where name like '%${keyName}%'`
+    const sqlQuery = `SELECT 
+    foods.id, foods.name, description,
+    price, image, status, discount
+    , categories_child.name as category
+    FROM foods
+    JOIN categories_child on foods.category_id = categories_child.id where foods.name like '%${keyName}%'`
     const [results] = await pool.execute(
         sqlQuery
     )
