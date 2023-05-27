@@ -3,7 +3,7 @@ import { configViewEngine } from './configs/index'
 import { initWebRoutes, initAPIRoute } from './routes/index'
 
 const hostName = '127.0.0.1'
-const port = 3000
+const port = 8080
 const app = express()
 
 app.use(express.urlencoded({ extends: true }))
